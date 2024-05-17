@@ -14,11 +14,11 @@ import java.util.List;
 public class MovieSearchService {
     private final MovieInfoRepository movieInfoRepository;
     public List<MovieInfoDto> getMovieSearchResults(String searchExpression) {
-        List<MovieInfo> userInfoList = movieInfoRepository.findByTitleOrOverviewContaining(searchExpression,50);
+        List<MovieInfo> userInfoList = movieInfoRepository.findMovies(searchExpression,50);
         return getMovieInfosDto(userInfoList);
     }
     public List<MovieInfoDto> getLiveMovieSearchResults(String searchExpression) {
-        List<MovieInfo> userInfoList = movieInfoRepository.findByTitleOrOverviewContaining(searchExpression,7);
+        List<MovieInfo> userInfoList = movieInfoRepository.findMovies(searchExpression,7);
         return getMovieInfosDto(userInfoList);
     }
     private List<MovieInfoDto> getMovieInfosDto(List<MovieInfo> movieInfoList) {
