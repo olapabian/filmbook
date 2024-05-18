@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .and()
 
                 .authorizeHttpRequests(authorize -> authorize
-                        // dostęp zawsze
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user").permitAll()

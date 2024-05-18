@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,21 +36,28 @@ public class Comment {
     private Date updatedDate;
 
     @Column(name = "created_time")
-    private Date createdTime;
+    private Time createdTime;
 
     @Column(name = "updated_time")
-    private Date updatedTime;
+    private Time updatedTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-// moze nie byc
-//    @ManyToOne
-//    @JoinColumn(name = "movie_info")
-//    private MovieInfo movieInfo;
 
     @ManyToOne
     @JoinColumn(name = "review_info")
     private ReviewInfo reviewInfo;
 
+    public Comment( String content, Long likes, String usersWhoLikedIds, Date createdDate, Date updatedDate, Time createdTime, Time updatedTime, User user, ReviewInfo reviewInfo) {
+        this.content = content;
+        this.likes = likes;
+        this.usersWhoLikedIds = usersWhoLikedIds;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+        this.user = user;
+        this.reviewInfo = reviewInfo;
+    }
 }

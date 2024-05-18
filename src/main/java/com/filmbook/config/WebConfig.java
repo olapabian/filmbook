@@ -19,9 +19,11 @@ public class WebConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Ustawienie zezwolenia tylko na http://localhost:5173
+
         configuration.addAllowedOrigin("http://localhost:5173");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod(HttpMethod.OPTIONS);
+        configuration.addAllowedMethod(HttpMethod.PATCH);
         configuration.addAllowedMethod(HttpMethod.GET);
         configuration.addAllowedMethod(HttpMethod.POST);
         configuration.addAllowedMethod(HttpMethod.PUT);
@@ -33,7 +35,8 @@ public class WebConfig {
                 HttpMethod.POST.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name(),
-                HttpMethod.OPTIONS.name() // Dodanie obsługi pre-flight requestów
+                HttpMethod.OPTIONS.name(),
+                HttpMethod.PATCH.name()
         ));
 
         // Ustawienie zezwolenia na wszystkie nagłówki

@@ -15,7 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
 		"com.filmbook.services.searches",
 		"com.filmbook.services.userOperations",
 		"com.filmbook.services.movieOperations",
-		"com.filmbook.services.reviewOperations"
+		"com.filmbook.services.reviewOperations",
+		"com.filmbook.services.commentOperations"
 })
 public class FilmbookApplication {
 

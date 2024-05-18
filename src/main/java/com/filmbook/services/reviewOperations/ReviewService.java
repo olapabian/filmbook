@@ -147,4 +147,43 @@ public class ReviewService {
     }
 
 
+    public void addLike(String reviewId, String userId) {
+        Optional<ReviewInfo> reviewInfoOptional = reviewInfoRepository.findById(Long.valueOf(reviewId));
+        if(reviewInfoOptional.isPresent()){
+            ReviewInfo reviewInfo = reviewInfoOptional.get();
+            reviewInfo.setLikes(reviewInfo.getLikes() + 1);
+            reviewInfo.setUsersWhoLikedIds(reviewInfo.getUsersWhoLikedIds() + userId + ";");
+            reviewInfoRepository.save(reviewInfo);
+        }
+    }
+
+    public void removeLike(String reviewId, String userId) {
+        Optional<ReviewInfo> reviewInfoOptional = reviewInfoRepository.findById(Long.valueOf(reviewId));
+        if(reviewInfoOptional.isPresent()){
+            ReviewInfo reviewInfo = reviewInfoOptional.get();
+            reviewInfo.setLikes(reviewInfo.getLikes() - 1);
+            reviewInfo.setUsersWhoLikedIds(newLikesString(reviewInfo.getUsersWhoLikedIds(),Long.valueOf(userId)));
+            reviewInfoRepository.save(reviewInfo);
+        }
+    }
+    private String newLikesString(String string, Long idToRemove) {
+        StringBuilder result = new StringBuilder();
+        String[] ids = string.split(";");
+
+        for (String id : ids) {
+            Long idValue;
+            try {
+                idValue = Long.parseLong(id.trim());
+            } catch (NumberFormatException e) {
+                continue;
+            }
+            if (idValue.equals(idToRemove)) {
+                continue;
+            }
+            result.append(id).append(";");
+        }
+
+
+        return result.toString();
+    }
 }
