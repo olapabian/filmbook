@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface MovieInfoRepository extends JpaRepository<MovieInfo, Long> {
 
-    @Query("SELECT m FROM movie_info m WHERE " +
-            "(LOWER(m.title) LIKE CONCAT('%', LOWER(:searchExpression), '%') OR " +
-            "LOWER(m.overview) LIKE CONCAT('%', LOWER(:searchExpression), '%')) " +
-            "ORDER BY CASE WHEN LOWER(m.title) LIKE CONCAT(LOWER(:searchExpression), '%') THEN 0 ELSE 1 END, RANDOM() " +
+    @Query("SELECT m FROM movie_info m WHERE" +
+            "(LOWER(m.title) LIKE CONCAT('%', LOWER(:searchExpression), '%')) OR " +
+            "LOWER(m.overview) LIKE CONCAT('%', LOWER(:searchExpression), '%')  " +
+            "ORDER BY CASE WHEN LOWER(m.title) LIKE CONCAT(LOWER(:searchExpression), '%') THEN 0 ELSE 1 END " +
             "LIMIT :limit")
     List<MovieInfo> findMovies(String searchExpression, int limit);
 

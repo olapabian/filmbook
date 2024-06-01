@@ -40,7 +40,7 @@ public class UserAuthProvider {
     public String createToken(String login) {
         Date now = new Date();
 //        Date validity = new Date(now.getTime() + 3600000); // 1 hour to jest w
-        Date validity = new Date(now.getTime() + 360000000); // 1 hour to jest w
+        Date validity = new Date(now.getTime() + 360000000); //duzo czasu
 //        Date validity = new Date(now.getTime() + 60000); // minuta
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);

@@ -47,15 +47,25 @@ public class CommentService {
     }
 
     public void addComment(Long reviewId, Long userId, String content) {
+        // Usunięcie pierwszego i ostatniego znaku z łańcucha content
+        if (content.length() > 1) {
+            content = content.substring(1, content.length() - 1);
+        } else {
+            content = "";
+        }
+
         ReviewInfo reviewInfo = findReview(reviewId);
+        reviewInfo.setCommentsCount(reviewInfo.getCommentsCount() + 1);
         User user = findUser(userId);
-        Long likes =0L;
+        Long likes = 0L;
         java.sql.Date createdDate = new java.sql.Date(System.currentTimeMillis());
         Date lastUpdatedDate = null;
         Time createdTime = Time.valueOf(LocalTime.now());
         Time updatedTime = null;
-        commentRepository.save(new Comment(content,likes,"",createdDate,lastUpdatedDate,createdTime,updatedTime,user,reviewInfo));
+        reviewInfoRepository.save(reviewInfo);
+        commentRepository.save(new Comment(content, likes, "", createdDate, lastUpdatedDate, createdTime, updatedTime, user, reviewInfo));
     }
+
 
     private User findUser(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -74,7 +84,20 @@ public class CommentService {
         else return null;
     }
 
-    public void deleteComment(Long aLong) {
-        commentRepository.deleteById(aLong);
+    public void deleteComment(Long commentId) {
+        Comment comment = findComment(commentId);
+        ReviewInfo reviewInfo = findReview(comment.getReviewInfo().getReviewId());
+        reviewInfo.setCommentsCount(reviewInfo.getCommentsCount()-1);
+        reviewInfoRepository.save(reviewInfo);
+        commentRepository.deleteById(commentId);
+    }
+
+    private Comment findComment(Long commentId) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+        if(commentOptional.isPresent()){
+            Comment comment = commentOptional.get();
+            return comment;
+        }
+        return null;
     }
 }
